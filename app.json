@@ -1,0 +1,10 @@
+{
+    "expo": {
+        "scheme": "inefable",
+        "web": {
+            "bundler": "metro"
+        },
+        "name": "inefable",
+        "slug": "inefable"
+    }
+}
