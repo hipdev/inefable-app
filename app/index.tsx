@@ -1,4 +1,10 @@
-import { Text, TouchableOpacity, View } from 'react-native'
+import {
+  SafeAreaView,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from 'react-native'
 import { Facebook, Twitter } from 'lucide-react-native'
 import { AntDesign } from '@expo/vector-icons'
 import * as Linking from 'expo-linking'
@@ -36,29 +42,25 @@ export default function Home() {
 
   console.log('user', user)
   return (
-    <View className='flex-1 items-center justify-center'>
+    <SafeAreaView className='flex-1 items-center justify-center'>
       {/* <Link href='/diary'>Go to Details</Link> */}
 
       <View className='items-center'>
         <Text className='mb-20 text-4xl font-black'>Inefable</Text>
 
-        <Text className='mb-3 text-xl'>You can enter with:</Text>
+        <Text className='mb-3 text-xl'>
+          Get a magic link to your email to login
+        </Text>
+        <View>
+          <TextInput placeholder='useless placeholder' keyboardType='numeric' />
+        </View>
 
         <View className='flex-row space-x-2'>
-          <TouchableOpacity className='flex-row items-center space-x-2 rounded-md bg-blue-400 px-3 py-2'>
-            <Text className='text-lg text-white'> Twitter</Text>
-            <Twitter color='white' />
-          </TouchableOpacity>
           <TouchableOpacity
             onPress={handleLogin}
-            className='flex-row items-center space-x-2 rounded-md bg-red-500 px-3 py-2'
+            className='flex-row items-center space-x-2 rounded-md bg-primary px-3 py-2'
           >
-            <Text className='text-lg text-white'> Google</Text>
-            <AntDesign name='google' size={22} color='white' />
-          </TouchableOpacity>
-          <TouchableOpacity className='flex-row items-center space-x-2 rounded-md bg-blue-600 px-3 py-2'>
-            <Text className='text-lg text-white'> Facebook</Text>
-            <Facebook color='white' />
+            <Text className='text-lg text-white'> Get magic link</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -70,6 +72,6 @@ export default function Home() {
           </TouchableOpacity>
         )}
       </View>
-    </View>
+    </SafeAreaView>
   )
 }
