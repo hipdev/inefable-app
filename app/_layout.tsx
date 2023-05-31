@@ -4,6 +4,7 @@ import { AuthContextProvider, useUser } from '../components/AuthContext'
 
 export default function Layout() {
   const { user } = useUser()
+  console.log(user, 'user layout')
 
   return (
     <AuthContextProvider>
@@ -33,17 +34,27 @@ export default function Layout() {
             title: 'Diario',
             tabBarIcon: () => <Home />,
             headerShown: false,
-            href: user,
+            ...(!user && { href: null }),
           }}
         />
 
         <Tabs.Screen
           name='diary'
-          options={{ title: '', tabBarIcon: () => <Edit3 />, href: user }}
+          options={{
+            title: '',
+            tabBarIcon: () => <Edit3 />,
+            href: user,
+            ...(!user && { href: null }),
+          }}
         />
         <Tabs.Screen
           name='alarm'
-          options={{ title: '', tabBarIcon: () => <Edit3 />, href: user }}
+          options={{
+            title: '',
+            tabBarIcon: () => <Edit3 />,
+            href: user,
+            ...(!user && { href: null }),
+          }}
         />
       </Tabs>
     </AuthContextProvider>

@@ -11,15 +11,18 @@ import supabase from '../lib/supabase'
 import { useUser } from '../components/AuthContext'
 import { useRef, useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
+import { Redirect } from 'expo-router'
 
 export default function Home() {
   const { user } = useUser()
-  const [email, setEmail] = useState('')
-  const [error, setError] = useState(false)
   const [success, setSuccess] = useState(false)
 
+  if (user) {
+    // Redirect to the login screen if the user is not authenticated.
+    return <Redirect href='/' />
+  }
+
   const {
-    register,
     handleSubmit,
     control,
     formState: { errors },
@@ -27,13 +30,9 @@ export default function Home() {
 
   const inputRef = useRef(null)
 
-  const handleLogin = async () => {
+  const handleLogin = async ({ email }) => {
+    console.log(email, 'email')
     let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/
-    if (reg.test(email) === false || email == '') {
-      setError(true)
-      return
-    }
-    setError(false)
 
     inputRef.current.blur()
 
@@ -73,36 +72,24 @@ export default function Home() {
             rules={{
               required: true,
             }}
+            name='email'
             render={({ field: { onChange, onBlur, value } }) => (
               <TextInput
                 onBlur={onBlur}
-                onChangeText={onChange}
+                onChangeText={(value) => onChange(value.toLowerCase())}
                 value={value}
                 placeholder='add your email'
                 className='h-9 flex-1 text-lg'
                 textAlign='center'
                 inputMode='email'
                 placeholderTextColor={'#444'}
+                autoCapitalize='none'
+                ref={inputRef}
               />
             )}
-            name='firstName'
-          />
-
-          <TextInput
-            ref={inputRef}
-            placeholder='add your email'
-            keyboardType='numeric'
-            onChangeText={(value) => setEmail(value.toLowerCase())}
-            value={email}
-            className='h-9 flex-1 text-lg'
-            textAlign='center'
-            inputMode='email'
-            autoCapitalize='none'
-            autoCorrect={false}
-            placeholderTextColor={'#444'}
           />
         </View>
-        {error && (
+        {errors.email && (
           <View className='mt-0.5 flex-row'>
             <Text className='mx-8 flex-1 text-right text-red-500'>
               Añade un email válido
