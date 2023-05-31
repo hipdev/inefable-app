@@ -10,12 +10,20 @@ import * as Linking from 'expo-linking'
 import supabase from '../lib/supabase'
 import { useUser } from '../components/AuthContext'
 import { useRef, useState } from 'react'
+import { Controller, useForm } from 'react-hook-form'
 
 export default function Home() {
   const { user } = useUser()
   const [email, setEmail] = useState('')
   const [error, setError] = useState(false)
   const [success, setSuccess] = useState(false)
+
+  const {
+    register,
+    handleSubmit,
+    control,
+    formState: { errors },
+  } = useForm()
 
   const inputRef = useRef(null)
 
@@ -60,6 +68,26 @@ export default function Home() {
 
         <Text className='mb-3 text-xl'>Obtener un link mágico de ingreso</Text>
         <View className='mx-8 flex-row rounded-md border border-black/50 pb-2.5'>
+          <Controller
+            control={control}
+            rules={{
+              required: true,
+            }}
+            render={({ field: { onChange, onBlur, value } }) => (
+              <TextInput
+                onBlur={onBlur}
+                onChangeText={onChange}
+                value={value}
+                placeholder='add your email'
+                className='h-9 flex-1 text-lg'
+                textAlign='center'
+                inputMode='email'
+                placeholderTextColor={'#444'}
+              />
+            )}
+            name='firstName'
+          />
+
           <TextInput
             ref={inputRef}
             placeholder='add your email'
@@ -84,7 +112,7 @@ export default function Home() {
 
         <View className='mt-4 flex-row space-x-2'>
           <TouchableOpacity
-            onPress={handleLogin}
+            onPress={() => handleSubmit(handleLogin)()}
             className='flex-row items-center space-x-2 rounded-md bg-primary px-3 py-2'
           >
             <Text className='text-lg text-white'>Obtener link</Text>
