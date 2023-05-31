@@ -1,23 +1,46 @@
 import { Tabs } from 'expo-router'
-import { Edit3, ListPlus, LogIn } from 'lucide-react-native'
-import { AuthContextProvider } from '../components/AuthContext'
+import { Edit3, HelpCircle, Home, LogIn } from 'lucide-react-native'
+import { AuthContextProvider, useUser } from '../components/AuthContext'
 
 export default function Layout() {
+  const { user } = useUser()
+
   return (
     <AuthContextProvider>
       <Tabs>
         {/* The screens will now show up from left to right: index, settings, all other routes... */}
         <Tabs.Screen
-          name='index'
-          options={{ title: 'Login', tabBarIcon: () => <LogIn /> }}
+          name='login'
+          options={{
+            title: 'Login',
+            tabBarIcon: () => <LogIn />,
+            headerShown: false,
+          }}
         />
         <Tabs.Screen
+          name='index'
+          options={{
+            title: 'Diario',
+            tabBarIcon: () => <Home />,
+            headerShown: false,
+            href: user,
+          }}
+        />
+
+        <Tabs.Screen
           name='diary'
-          options={{ title: 'Diario', tabBarIcon: () => <Edit3 /> }}
+          options={{ title: '', tabBarIcon: () => <Edit3 />, href: user }}
         />
         <Tabs.Screen
           name='alarm'
-          options={{ title: 'Mas+', tabBarIcon: () => <ListPlus /> }}
+          options={{ title: '', tabBarIcon: () => <Edit3 />, href: user }}
+        />
+        <Tabs.Screen
+          name='about'
+          options={{
+            title: 'Inefable?',
+            tabBarIcon: () => <HelpCircle />,
+          }}
         />
       </Tabs>
     </AuthContextProvider>
