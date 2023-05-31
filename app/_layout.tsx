@@ -17,6 +17,16 @@ export default function Layout() {
             headerShown: false,
           }}
         />
+
+        <Tabs.Screen
+          name='about'
+          options={{
+            title: 'Inefable?',
+            tabBarIcon: () => <HelpCircle />,
+            headerShown: false,
+          }}
+        />
+
         <Tabs.Screen
           name='index'
           options={{
@@ -34,13 +44,6 @@ export default function Layout() {
         <Tabs.Screen
           name='alarm'
           options={{ title: '', tabBarIcon: () => <Edit3 />, href: user }}
-        />
-        <Tabs.Screen
-          name='about'
-          options={{
-            title: 'Inefable?',
-            tabBarIcon: () => <HelpCircle />,
-          }}
         />
       </Tabs>
     </AuthContextProvider>

@@ -77,7 +77,7 @@ export default function Home() {
         {error && (
           <View className='mt-0.5 flex-row'>
             <Text className='mx-8 flex-1 text-right text-red-500'>
-              Añade un link válido
+              Añade un email válido
             </Text>
           </View>
         )}
@@ -87,18 +87,10 @@ export default function Home() {
             onPress={handleLogin}
             className='flex-row items-center space-x-2 rounded-md bg-primary px-3 py-2'
           >
-            <Text className='text-lg text-white'> Get magic link</Text>
+            <Text className='text-lg text-white'>Obtener link</Text>
           </TouchableOpacity>
         </View>
       </View>
-
-      {user && (
-        <View>
-          <TouchableOpacity className='mt-10' onPress={handleLogout}>
-            <Text>Logout</Text>
-          </TouchableOpacity>
-        </View>
-      )}
 
       {success && (
         <View className='mt-4'>
