@@ -7,11 +7,12 @@ import {
 } from 'react-native'
 
 import * as Linking from 'expo-linking'
-import supabase from '../lib/supabase'
+
 import { useEffect, useRef, useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 import { useRouter, useSegments } from 'expo-router'
-import { useAuthStore } from '../components/stores/auth'
+import supabase from '../../lib/supabase'
+import { useAuthStore } from '../../components/stores/auth'
 
 export default function Login() {
   const { user, session } = useAuthStore()
@@ -22,9 +23,9 @@ export default function Login() {
   useEffect(() => {
     console.log(user, 'user here', session)
     if (user) {
-      router.replace('/')
+      router.replace('/home')
     }
-  }, [segments])
+  }, [segments, user])
 
   const {
     handleSubmit,
