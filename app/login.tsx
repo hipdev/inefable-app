@@ -8,25 +8,35 @@ import {
 
 import * as Linking from 'expo-linking'
 import supabase from '../lib/supabase'
-import { useUser } from '../components/AuthContext'
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
-import { Redirect } from 'expo-router'
+import { useRouter, useSegments } from 'expo-router'
+import { useAuthStore } from '../components/stores/auth'
 
-export default function Home() {
-  const { user } = useUser()
+export default function Login() {
+  const { user, session } = useAuthStore()
   const [success, setSuccess] = useState(false)
+  const router = useRouter()
+  const segments = useSegments()
 
-  if (user) {
-    // Redirect to the login screen if the user is not authenticated.
-    return <Redirect href='/' />
-  }
+  useEffect(() => {
+    console.log(user, 'user here', session)
+    if (user) {
+      router.replace('/')
+    }
+  }, [segments])
 
   const {
     handleSubmit,
     control,
+    reset,
     formState: { errors },
   } = useForm()
+
+  useEffect(() => {
+    setSuccess(false)
+    reset()
+  }, [segments])
 
   const inputRef = useRef(null)
 

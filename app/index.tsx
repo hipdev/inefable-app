@@ -1,17 +1,21 @@
-import { SafeAreaView, Text, View } from 'react-native'
+import { SafeAreaView, Text, TouchableOpacity, View } from 'react-native'
 
-import { useUser } from '../components/AuthContext'
-import { Redirect } from 'expo-router'
+import { Redirect, useRouter, useSegments } from 'expo-router'
+import supabase from '../lib/supabase'
+import { useAuthStore } from '../components/stores/auth'
+import { useEffect } from 'react'
 
 export default function Home() {
-  const { user } = useUser()
+  const { user } = useAuthStore()
+  const router = useRouter()
 
-  if (!user) {
-    // Redirect to the login screen if the user is not authenticated.
-    return <Redirect href='/login' />
+  const handleLogout = async () => {
+    const { error } = await supabase.auth.signOut()
+    if (error) console.log('Error logging out:', error.message)
+
+    router.push('/login')
   }
 
-  console.log('user', user)
   return (
     <SafeAreaView className='flex-1 items-center justify-center'>
       {/* <Link href='/diary'>Go to Details</Link> */}
@@ -22,6 +26,10 @@ export default function Home() {
         <Text className='mb-3 text-xl'>Obtener un link mágico de ingreso</Text>
         <View className='mx-8 flex-row rounded-md border border-black/50 pb-2.5'></View>
       </View>
+
+      <TouchableOpacity onPress={handleLogout}>
+        <Text>salir</Text>
+      </TouchableOpacity>
     </SafeAreaView>
   )
 }

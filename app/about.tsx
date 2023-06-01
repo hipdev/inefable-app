@@ -1,16 +1,6 @@
-import {
-  SafeAreaView,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  View,
-} from 'react-native'
-
-import { useUser } from '../components/AuthContext'
+import { SafeAreaView, Text, View } from 'react-native'
 
 export default function Home() {
-  const { user } = useUser()
-
   return (
     <SafeAreaView className='flex-1 items-center justify-center'>
       {/* <Link href='/diary'>Go to Details</Link> */}

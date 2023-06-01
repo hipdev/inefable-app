@@ -1,15 +1,10 @@
-import React, { createContext, useContext, useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { useURL } from 'expo-linking'
 import supabase from '../lib/supabase'
+import { useAuthStore } from './stores/auth'
 
-export const AuthContext = createContext({
-  user: null,
-  session: null,
-})
-
-export const AuthContextProvider = (props) => {
-  const [userSession, setUserSession] = useState(null)
-  const [user, setUser] = useState(null)
+export const AuthContextProvider = ({ children }) => {
+  const { setUser, setSession } = useAuthStore()
 
   const url = useURL()
 
@@ -38,13 +33,15 @@ export const AuthContextProvider = (props) => {
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
-      setUserSession(session)
+      console.log('session here', session)
+      setSession(session)
       setUser(session?.user ?? null)
     })
 
     const { data: authListener } = supabase.auth.onAuthStateChange(
       async (event, session) => {
-        setUserSession(session)
+        console.log(session, 'session here 2')
+        setSession(session)
         setUser(session?.user ?? null)
       }
     )
@@ -52,19 +49,7 @@ export const AuthContextProvider = (props) => {
     return () => {
       authListener.subscription
     }
-  }, [url, setUserSession])
+  }, [url])
 
-  const value = {
-    userSession,
-    user,
-  }
-  return <AuthContext.Provider value={value} {...props} />
-}
-
-export const useUser = () => {
-  const context = useContext(AuthContext)
-  if (context === undefined) {
-    throw new Error('useUser must be used within a AuthContextProvider.')
-  }
-  return context
+  return children
 }
