@@ -6333,6 +6333,13 @@ react-native-gradle-plugin@^0.71.18:
   resolved "https://registry.yarnpkg.com/react-native-gradle-plugin/-/react-native-gradle-plugin-0.71.18.tgz#20ef199bc85be32e45bb6cc069ec2e7dcb1a74a6"
   integrity sha512-7F6bD7B8Xsn3JllxcwHhFcsl9aHIig47+3eN4IHFNqfLhZr++3ElDrcqfMzugM+niWbaMi7bJ0kAkAL8eCpdWg==
 
+react-native-progress@^5.0.0:
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/react-native-progress/-/react-native-progress-5.0.0.tgz#f5ac6ceaeee27f184c660b00f29419e82a9d0ab0"
+  integrity sha512-KjnGIt3r9i5Kn2biOD9fXLJocf0bwxPRxOyAgXEnZTJQU2O+HyzgGFRCbM5h3izm9kKIkSc1txh8aGmMafCD9A==
+  dependencies:
+    prop-types "^15.7.2"
+
 react-native-reanimated@~2.14.4:
   version "2.14.4"
   resolved "https://registry.yarnpkg.com/react-native-reanimated/-/react-native-reanimated-2.14.4.tgz#3fa3da4e7b99f5dfb28f86bcf24d9d1024d38836"

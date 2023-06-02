@@ -1,20 +1,17 @@
 import {
   View,
   Text,
-  Touchable,
   TouchableOpacity,
   SafeAreaView,
   ScrollView,
 } from 'react-native'
-import { useRouter } from 'expo-router'
 import supabase from '../../lib/supabase'
 import { TextInput } from 'react-native'
 import { Controller, useForm } from 'react-hook-form'
 import { Save, Send } from 'lucide-react-native'
+import * as Progress from 'react-native-progress'
 
 export default function HomeScreen() {
-  const router = useRouter()
-
   const {
     handleSubmit,
     control,
@@ -33,7 +30,7 @@ export default function HomeScreen() {
       setTimeout(() => {
         console.log('finish')
         resolve()
-      }, 5000)
+      }, 3000)
     })
   }
   return (
@@ -65,12 +62,16 @@ export default function HomeScreen() {
               )}
             />
           </View>
-          <TouchableOpacity
-            disabled={isSubmitting}
-            onPress={() => handleSubmit(handleName)()}
-          >
-            <Send size={28} color='#444' />
-          </TouchableOpacity>
+          {isSubmitting ? (
+            <Progress.Circle size={28} indeterminate={true} color='#AC66CC' />
+          ) : (
+            <TouchableOpacity
+              disabled={isSubmitting}
+              onPress={() => handleSubmit(handleName)()}
+            >
+              <Send size={28} color='#444' />
+            </TouchableOpacity>
+          )}
         </View>
         <Text className='mt-7 text-lg'>
           Toda tu información viaja segura, aún así, procura no guardar nada
@@ -79,7 +80,7 @@ export default function HomeScreen() {
           Solo tu tienes acceso a toda tu información, no se comparte con nadie.
         </Text>
 
-        <Text className='mt-4 text-lg font-medium text-black/80'>
+        {/* <Text className='mt-4 text-lg font-medium text-black/80'>
           ¿Sabías que?
         </Text>
         <Text className='text-base text-black/80'>
@@ -87,7 +88,7 @@ export default function HomeScreen() {
           liberar estrés, según un estudio de la Universidad de Texas. Nos
           emociona mucho que vas a empezar a escribir en tu diario, esperamos
           que te guste.
-        </Text>
+        </Text> */}
       </ScrollView>
     </SafeAreaView>
   )
