@@ -8,10 +8,12 @@ import {
 import supabase from '../../lib/supabase'
 import { TextInput } from 'react-native'
 import { Controller, useForm } from 'react-hook-form'
-import { Save, Send } from 'lucide-react-native'
+import { Send } from 'lucide-react-native'
 import * as Progress from 'react-native-progress'
+import { useAuthStore } from '../../components/stores/auth'
 
 export default function HomeScreen() {
+  const { user } = useAuthStore()
   const {
     handleSubmit,
     control,
@@ -26,13 +28,24 @@ export default function HomeScreen() {
 
   const handleName = async ({ name }) => {
     console.log('name', name)
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        console.log('finish')
-        resolve()
-      }, 3000)
+
+    // Add user to admin table
+    const { data, error } = await supabase.auth.updateUser({
+      data: { name },
     })
+
+    if (!error) {
+      const { data, error } = await supabase
+        .from('profiles')
+        .insert([{ user_id: user.id, name }])
+    }
+
+    // add user to profiles table
+
+    console.log('data', data, error)
   }
+
+  console.log('user', user)
   return (
     <SafeAreaView className='flex-1'>
       <ScrollView className='mx-8 mt-10'>
