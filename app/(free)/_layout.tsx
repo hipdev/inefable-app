@@ -5,7 +5,7 @@ import { HelpCircle, LogIn } from 'lucide-react-native'
 export default function Layout() {
   return (
     <>
-      <Stack.Screen options={{ title: 'Overview', headerShown: false }} />
+      <Stack.Screen options={{ headerShown: false }} />
       <Tabs
         screenOptions={{
           tabBarStyle: {

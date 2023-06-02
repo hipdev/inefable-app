@@ -1,4 +1,4 @@
-import { Tabs, useRouter, useSegments } from 'expo-router'
+import { Stack, Tabs, useRouter, useSegments } from 'expo-router'
 
 import { HelpCircle, Home, List, LogIn, Plus } from 'lucide-react-native'
 import { useAuthStore } from '../../components/stores/auth'
@@ -17,39 +17,46 @@ export default function Layout() {
   }, [segments, user])
 
   return (
-    <Tabs
-      screenOptions={{
-        tabBarStyle: { backgroundColor: '#00CCBB' },
-        tabBarLabelStyle: { color: 'white' },
-      }}
-    >
-      {/* Start no authenticated routes */}
-      <Tabs.Screen
-        name='home'
-        options={{
-          title: 'Diario',
-          tabBarIcon: () => <Home color='white' />,
-          headerShown: false,
+    <>
+      <Stack.Screen options={{ headerShown: false }} />
+      <Tabs
+        screenOptions={{
+          tabBarStyle: {
+            backgroundColor: '#AC66CC', //AC66CC
+            paddingTop: 10,
+            paddingBottom: 2,
+          },
+          tabBarLabelStyle: { color: 'white' },
         }}
-      />
+      >
+        {/* Start no authenticated routes */}
+        <Tabs.Screen
+          name='home'
+          options={{
+            title: 'Diario',
+            tabBarIcon: () => <Home color='white' />,
+            headerShown: false,
+          }}
+        />
 
-      <Tabs.Screen
-        name='new-post'
-        options={{
-          title: 'Hoy',
-          tabBarIcon: () => <Plus color='white' />,
-          headerShown: false,
-        }}
-      />
-      <Tabs.Screen
-        name='more'
-        options={{
-          title: 'Más',
-          tabBarIcon: () => <List color='white' />,
-          headerShown: false,
-        }}
-      />
-      {/* End no authenticated routes */}
-    </Tabs>
+        <Tabs.Screen
+          name='new-post'
+          options={{
+            title: 'Hoy',
+            tabBarIcon: () => <Plus color='white' />,
+            headerShown: false,
+          }}
+        />
+        <Tabs.Screen
+          name='more'
+          options={{
+            title: 'Más',
+            tabBarIcon: () => <List color='white' />,
+            headerShown: false,
+          }}
+        />
+        {/* End no authenticated routes */}
+      </Tabs>
+    </>
   )
 }
