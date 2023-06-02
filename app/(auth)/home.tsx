@@ -93,6 +93,10 @@ export default function HomeScreen() {
           Solo tu tienes acceso a toda tu información, no se comparte con nadie.
         </Text>
 
+        <TouchableOpacity onPress={handleLogout}>
+          <Text className=' mt-10 text-2xl'>Salir</Text>
+        </TouchableOpacity>
+
         {/* <Text className='mt-4 text-lg font-medium text-black/80'>
           ¿Sabías que?
         </Text>

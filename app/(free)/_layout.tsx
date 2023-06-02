@@ -9,7 +9,7 @@ export default function Layout() {
       <Tabs
         screenOptions={{
           tabBarStyle: {
-            backgroundColor: '#AC66CC', //AC66CC
+            backgroundColor: '#590696', //AC66CC
             paddingTop: 10,
             paddingBottom: 2,
           },
