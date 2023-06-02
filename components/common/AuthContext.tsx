@@ -27,15 +27,13 @@ export const AuthContextProvider = ({ children }) => {
         .then(({ data: { session } }) => {
           if (session) {
             // supabase.auth._notifyAllSubscribers('SIGNED_IN', session)
-            console.log(session, 'session')
+            console.log('session ready')
           }
         })
     }
   }, [url])
 
   useEffect(() => {
-    console.log('me ejecuto')
-
     supabase.auth.getSession().then(({ data: { session } }) => {
       setSession(session)
       setUser(session?.user ?? null)

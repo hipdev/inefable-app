@@ -1,7 +1,7 @@
 import { View, Text } from 'react-native'
-import { useRouter } from 'expo-router'
+import { Stack, useRouter } from 'expo-router'
 
-export default function Details() {
+export default function MoreScreen() {
   const router = useRouter()
   return (
     <View>

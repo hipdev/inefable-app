@@ -21,7 +21,6 @@ export default function Login() {
   const segments = useSegments()
 
   useEffect(() => {
-    console.log(user, 'user here', session)
     if (user) {
       router.replace('/home')
     }
@@ -42,7 +41,6 @@ export default function Login() {
   const inputRef = useRef(null)
 
   const handleLogin = async ({ email }) => {
-    console.log(email, 'email')
     let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/
 
     inputRef.current.blur()
@@ -68,7 +66,6 @@ export default function Login() {
     if (error) console.log('Error logging out:', error.message)
   }
 
-  console.log('user', user)
   return (
     <SafeAreaView className='flex-1 items-center justify-center'>
       {/* <Link href='/diary'>Go to Details</Link> */}
@@ -89,7 +86,7 @@ export default function Login() {
                 onBlur={onBlur}
                 onChangeText={(value) => onChange(value.toLowerCase())}
                 value={value}
-                placeholder='add your email'
+                placeholder='Correo electrónico'
                 className='h-9 flex-1 text-lg'
                 textAlign='center'
                 inputMode='email'

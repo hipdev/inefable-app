@@ -1,6 +1,5 @@
 import { Stack } from 'expo-router'
-import { AuthContextProvider } from '../components/AuthContext'
-import TabsLayout from '../components/Tabs'
+import { AuthContextProvider } from '../components/common/AuthContext'
 
 export default function Layout() {
   return (
