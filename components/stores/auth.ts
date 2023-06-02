@@ -1,8 +1,9 @@
+import { AuthUser } from '@supabase/supabase-js'
 import { create } from 'zustand'
 
 type AuthStore = {
-  user: null | {}
-  setUser: (user: {}) => void
+  user: null | AuthUser
+  setUser: (user: AuthUser) => void
   session: null | {}
   setSession: (user: {}) => void
 }
