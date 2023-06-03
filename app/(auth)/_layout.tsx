@@ -4,6 +4,7 @@ import { Home, List, Plus } from 'lucide-react-native'
 import { useAuthStore } from '../../components/stores/auth'
 import { useEffect } from 'react'
 import { Text } from 'react-native'
+import { softViolet } from '../../lib/colors'
 
 export default function Layout() {
   const { user } = useAuthStore()
@@ -31,7 +32,7 @@ export default function Layout() {
           tabBarLabel: ({ focused, children }) => (
             <Text
               style={{
-                color: focused ? '#c16fff' : 'white',
+                color: focused ? softViolet : 'white',
                 marginTop: 7,
                 fontSize: 11,
               }}
@@ -47,7 +48,7 @@ export default function Layout() {
           options={{
             title: 'Diario',
             tabBarIcon: ({ focused }) => (
-              <Home color={focused ? '#c16fff' : 'white'} />
+              <Home color={focused ? softViolet : 'white'} />
             ),
             headerShown: false,
           }}
@@ -58,7 +59,7 @@ export default function Layout() {
           options={{
             title: 'Hoy',
             tabBarIcon: ({ focused }) => (
-              <Plus color={focused ? '#c16fff' : 'white'} />
+              <Plus color={focused ? softViolet : 'white'} />
             ),
             headerShown: false,
           }}
@@ -68,7 +69,7 @@ export default function Layout() {
           options={{
             title: 'Más',
             tabBarIcon: ({ focused }) => (
-              <List color={focused ? '#c16fff' : 'white'} />
+              <List color={focused ? softViolet : 'white'} />
             ),
             headerShown: false,
           }}
