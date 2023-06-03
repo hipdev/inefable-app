@@ -1,8 +1,9 @@
 import { Stack, Tabs, useRouter, useSegments } from 'expo-router'
 
-import { HelpCircle, Home, List, LogIn, Plus } from 'lucide-react-native'
+import { Home, List, Plus } from 'lucide-react-native'
 import { useAuthStore } from '../../components/stores/auth'
 import { useEffect } from 'react'
+import { Text } from 'react-native'
 
 export default function Layout() {
   const { user } = useAuthStore()
@@ -27,6 +28,17 @@ export default function Layout() {
             paddingBottom: 2,
           },
           tabBarLabelStyle: { color: 'white' },
+          tabBarLabel: ({ focused, children }) => (
+            <Text
+              style={{
+                color: focused ? '#c16fff' : 'white',
+                marginTop: 7,
+                fontSize: 11,
+              }}
+            >
+              {children}
+            </Text>
+          ),
         }}
       >
         {/* Start no authenticated routes */}
@@ -34,7 +46,9 @@ export default function Layout() {
           name='home'
           options={{
             title: 'Diario',
-            tabBarIcon: () => <Home color='white' />,
+            tabBarIcon: ({ focused }) => (
+              <Home color={focused ? '#c16fff' : 'white'} />
+            ),
             headerShown: false,
           }}
         />
@@ -43,7 +57,9 @@ export default function Layout() {
           name='new-post'
           options={{
             title: 'Hoy',
-            tabBarIcon: () => <Plus color='white' />,
+            tabBarIcon: ({ focused }) => (
+              <Plus color={focused ? '#c16fff' : 'white'} />
+            ),
             headerShown: false,
           }}
         />
@@ -51,7 +67,9 @@ export default function Layout() {
           name='more'
           options={{
             title: 'Más',
-            tabBarIcon: () => <List color='white' />,
+            tabBarIcon: ({ focused }) => (
+              <List color={focused ? '#c16fff' : 'white'} />
+            ),
             headerShown: false,
           }}
         />

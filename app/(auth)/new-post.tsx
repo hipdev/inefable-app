@@ -1,19 +1,21 @@
-import { View, Text } from 'react-native'
+import { View, Text, SafeAreaView, ScrollView } from 'react-native'
 import { Stack, useRouter } from 'expo-router'
 
 export default function AlarmScreen() {
   const router = useRouter()
+
+  const formattedDate = new Date().toLocaleDateString('es-CO', {
+    month: 'long',
+    day: 'numeric',
+  })
+
   return (
-    <View>
-      {/* <Stack.Screen options={{ title: 'Overview', headerShown: false }} /> */}
-      <Text
-        onPress={() => {
-          // Go back to the previous screen using the imperative API.
-          router.back()
-        }}
-      >
-        Details Screen
-      </Text>
-    </View>
+    <SafeAreaView className='flex-1'>
+      <ScrollView className='mx-8 mt-3'>
+        <Text className='mt-4 text-center text-4xl font-medium capitalize text-black/80'>
+          {formattedDate}
+        </Text>
+      </ScrollView>
+    </SafeAreaView>
   )
 }
