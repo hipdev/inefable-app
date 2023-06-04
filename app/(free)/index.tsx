@@ -74,7 +74,7 @@ export default function Login() {
         <Text className='mb-14 text-4xl font-black'>Inefable</Text>
 
         <Text className='mb-3 text-xl'>Obtener un link mágico de ingreso</Text>
-        <View className='mx-8 flex-row rounded-md border border-black/50 pb-2.5'>
+        <View className='mx-4 flex-row rounded-md border border-black/50 pb-2.5'>
           <Controller
             control={control}
             rules={{
@@ -99,7 +99,7 @@ export default function Login() {
         </View>
         {errors.email && (
           <View className='mt-0.5 flex-row'>
-            <Text className='mx-8 flex-1 text-right text-red-500'>
+            <Text className='mx-4 flex-1 text-right text-red-500'>
               Añade un email válido
             </Text>
           </View>

@@ -20,7 +20,7 @@ export default function HomeScreen() {
 
   return (
     <SafeAreaView className='flex-1'>
-      <ScrollView className='mx-8 mt-10'>
+      <ScrollView className='mx-4 mt-10'>
         {!user?.user_metadata?.name ? <AddName /> : <Welcome />}
 
         {/* <Text className='mt-4 text-lg font-medium text-black/80'>

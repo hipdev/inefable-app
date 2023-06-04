@@ -55,7 +55,7 @@ export default function Layout() {
         />
 
         <Tabs.Screen
-          name='new-post'
+          name='today'
           options={{
             title: 'Hoy',
             tabBarIcon: ({ focused }) => (

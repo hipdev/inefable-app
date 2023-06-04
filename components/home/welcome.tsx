@@ -22,7 +22,7 @@ export default function Welcome() {
       </Text>
 
       <Link
-        href='/new-post'
+        href='/today'
         className='mt-10 text-3xl font-extrabold text-primary'
       >
         Empezar hoy
