@@ -6,7 +6,6 @@ import {
   TextInput,
   KeyboardAvoidingView,
   TouchableWithoutFeedback,
-  Keyboard,
 } from 'react-native'
 import { useAuthStore } from '../../components/stores/auth'
 import { Controller, useForm } from 'react-hook-form'
@@ -14,10 +13,20 @@ import { currentMonthAndDay } from '../../lib/utils'
 import supabase from '../../lib/supabase'
 import { TapGestureHandler } from 'react-native-gesture-handler'
 import { useRouter } from 'expo-router'
+import useSWR from 'swr'
+import { createDiary, getToday } from '../../lib/db/stories'
 
-export default function AlarmScreen() {
+export default function TodayScreen() {
   const { user } = useAuthStore()
   const router = useRouter()
+
+  const { data: todayData } = useSWR(
+    user?.id ? ['getToday', user.id] : null,
+    getToday
+  )
+
+  console.log(todayData, 'today')
+
   const {
     handleSubmit,
     control,
@@ -25,19 +34,14 @@ export default function AlarmScreen() {
     formState: { isSubmitting },
   } = useForm()
 
-  const handlePost = async ({ name }) => {
-    const { error } = await supabase.auth.updateUser({
-      data: { name },
-    })
-
-    if (!error) {
-      const { error } = await supabase
-        .from('profiles')
-        .insert([{ user_id: user.id, name }])
-
-      if (!error) {
-        reset({ name: '' })
-      }
+  const handleTitle = async ({ title }) => {
+    if (!todayData) {
+      const res = await createDiary({
+        isTitle: true,
+        userData: title,
+        user_id: user.id,
+      })
+      console.log(res, 'res')
     }
   }
 
@@ -80,14 +84,9 @@ export default function AlarmScreen() {
               onActivated={() => router.push('/edit-today')}
             >
               <Text className='mt-5 text-lg'>
-                When I push a page on top of the stack in tab 1 stack it goes
-                inside the navigator and thus duplicates the header, I know I
-                can hide the hide on one or the other but then every page will
-                require conditional logic, {'\n'}
-                {'\n'} whereas I just want the pushed page to be on top, ideally
-                both without the tab bar and with its header, which would have
-                the correct title and back button Please let me know if you want
-                to make a different issue but I think these are interrelated
+                {todayData?.diary
+                  ? todayData.diary
+                  : 'Para escribir puedes dar un doble tap a este texto o presionar el boton de editar en la esquina inferior derecha.'}
               </Text>
             </TapGestureHandler>
           </View>
