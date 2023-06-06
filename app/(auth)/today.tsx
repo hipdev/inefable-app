@@ -1,20 +1,21 @@
+import { useRouter } from 'expo-router'
+import { debounce } from 'lodash'
+import { Controller, useForm } from 'react-hook-form'
 import {
-  View,
-  Text,
+  KeyboardAvoidingView,
   SafeAreaView,
   ScrollView,
+  Text,
   TextInput,
-  KeyboardAvoidingView,
   TouchableWithoutFeedback,
+  View,
 } from 'react-native'
-import { useAuthStore } from '../../components/stores/auth'
-import { Controller, useForm } from 'react-hook-form'
-import { currentMonthAndDay } from '../../lib/utils'
-import supabase from '../../lib/supabase'
 import { TapGestureHandler } from 'react-native-gesture-handler'
-import { useRouter } from 'expo-router'
 import useSWR from 'swr'
+
+import { useAuthStore } from '../../components/stores/auth'
 import { createDiary, getToday } from '../../lib/db/stories'
+import { currentMonthAndDay } from '../../lib/utils'
 
 export default function TodayScreen() {
   const { user } = useAuthStore()
@@ -27,23 +28,24 @@ export default function TodayScreen() {
 
   console.log(todayData, 'today')
 
-  const {
-    handleSubmit,
-    control,
-    reset,
-    formState: { isSubmitting },
-  } = useForm()
+  const { control } = useForm()
 
   const handleTitle = async ({ title }) => {
     if (!todayData) {
-      const res = await createDiary({
-        isTitle: true,
-        userData: title,
-        user_id: user.id,
-      })
-      console.log(res, 'res')
+      // const res = await createDiary({
+      //   isTitle: true,
+      //   userData: title,
+      //   user_id: user.id,
+      // })
+      // console.log(res, 'res')
+      console.log('ok')
     }
   }
+
+  const debouncedSave = debounce((input) => {
+    // Perform your desired action here, such as making an API call or updating the UI
+    console.log('Debounced input:', input)
+  }, 2000)
 
   return (
     <SafeAreaView className='flex-1'>
@@ -65,7 +67,10 @@ export default function TodayScreen() {
                 render={({ field: { onChange, onBlur, value } }) => (
                   <TextInput
                     onBlur={onBlur}
-                    onChangeText={onChange}
+                    onChangeText={(text) => {
+                      onChange(text)
+                      debouncedSave(text)
+                    }}
                     value={value}
                     placeholder='Titulo...(Opcional)'
                     className='h-9 flex-1 text-center text-xl text-primary'

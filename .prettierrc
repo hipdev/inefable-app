@@ -8,6 +8,7 @@
         "^\\w",
         "^lib/(.*)$",
         "^components/(.*)$",
+        "^app/(.*)$",
         "^[./]"
     ],
     "importOrderSeparation": true,
