@@ -1,4 +1,5 @@
 import { format } from 'date-fns'
+
 import supabase from '../supabase'
 
 // Queries
@@ -24,19 +25,23 @@ export async function createDiary({ isTitle, userData, user_id }) {
 
   const commonData = {
     user_id,
-    user_id_date: `${user_id}-${today}`,
+    user_id_date: `${user_id}--${today}`,
     date: today,
   }
 
   try {
-    const { data, error } = await supabase
+    const { error } = await supabase
       .from('diaries')
       .insert([
         isTitle
           ? { ...commonData, title: userData }
           : { ...commonData, diary: userData },
       ])
-    return { data, error }
+
+    if (!error) {
+      return { data: true }
+    }
+    return { error }
   } catch (error) {
     return { error }
   }

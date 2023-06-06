@@ -11,6 +11,7 @@ import {
   View,
 } from 'react-native'
 import { TapGestureHandler } from 'react-native-gesture-handler'
+import Toast from 'react-native-toast-message'
 import useSWR from 'swr'
 
 import { useAuthStore } from '../../components/stores/auth'
@@ -21,31 +22,42 @@ export default function TodayScreen() {
   const { user } = useAuthStore()
   const router = useRouter()
 
-  const { data: todayData } = useSWR(
+  const { data: todayData, mutate } = useSWR(
     user?.id ? ['getToday', user.id] : null,
     getToday
   )
 
-  console.log(todayData, 'today')
-
   const { control } = useForm()
-
-  const handleTitle = async ({ title }) => {
-    if (!todayData) {
-      // const res = await createDiary({
-      //   isTitle: true,
-      //   userData: title,
-      //   user_id: user.id,
-      // })
-      // console.log(res, 'res')
-      console.log('ok')
-    }
-  }
-
-  const debouncedSave = debounce((input) => {
+  const debouncedSaveTitle = debounce(async (title) => {
     // Perform your desired action here, such as making an API call or updating the UI
-    console.log('Debounced input:', input)
-  }, 2000)
+
+    console.log(todayData, 'ok')
+    if (!todayData) {
+      const res = await createDiary({
+        isTitle: true,
+        userData: title,
+        user_id: user.id,
+      })
+
+      if (res.data) {
+        Toast.show({
+          type: 'success',
+          text1: 'Yujuu!',
+          text2: 'Guardado correctamente 🥳',
+          position: 'bottom',
+          visibilityTime: 2500,
+          bottomOffset: 80,
+        })
+        mutate()
+      }
+
+      if (res.error) {
+        console.log(res.error, 'error')
+      }
+    }
+  }, 1500)
+
+  console.log(todayData, 'todays')
 
   return (
     <SafeAreaView className='flex-1'>
@@ -69,7 +81,7 @@ export default function TodayScreen() {
                     onBlur={onBlur}
                     onChangeText={(text) => {
                       onChange(text)
-                      debouncedSave(text)
+                      debouncedSaveTitle(text)
                     }}
                     value={value}
                     placeholder='Titulo...(Opcional)'

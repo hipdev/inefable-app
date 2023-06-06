@@ -1,9 +1,12 @@
 import { Stack } from 'expo-router'
-import { AuthContextProvider } from '../components/common/AuthContext'
 import { StatusBar } from 'expo-status-bar'
 import React from 'react'
-import { SWRConfig } from 'swr'
 import { AppState } from 'react-native'
+import Toast from 'react-native-toast-message'
+import { SWRConfig } from 'swr'
+
+import { AuthContextProvider } from '../components/common/AuthContext'
+import { toastConfig } from '../lib/toastConfig'
 
 export default function Layout() {
   return (
@@ -51,6 +54,7 @@ export default function Layout() {
       <AuthContextProvider>
         <Stack />
         <StatusBar style='dark' />
+        <Toast config={toastConfig} />
       </AuthContextProvider>
     </SWRConfig>
   )
