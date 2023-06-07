@@ -1,13 +1,7 @@
 import { Stack, useRouter } from 'expo-router'
-import {
-  ArrowBigLeft,
-  ArrowLeftCircle,
-  CornerDownLeft,
-  Save,
-} from 'lucide-react-native'
+import { ArrowLeftCircle, Save } from 'lucide-react-native'
 import { Controller, useForm } from 'react-hook-form'
 import {
-  Button,
   Keyboard,
   KeyboardAvoidingView,
   SafeAreaView,
@@ -22,7 +16,6 @@ import useSWR from 'swr'
 
 import { useAuthStore } from '@/components/stores/auth'
 import { createDiary, getToday, updateDiary } from '@/lib/db/stories'
-import supabase from '@/lib/supabase'
 import { currentMonthAndDay, successToast } from '@/lib/utils'
 
 export default function EditPost() {

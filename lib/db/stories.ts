@@ -17,6 +17,15 @@ export async function getToday([_key, user_id]) {
   return data
 }
 
+export async function getDiaries([_key, user_id]) {
+  let { data } = await supabase
+    .from('diaries')
+    .select('date, created_at, diary, id, title')
+    .eq('user_id', user_id)
+
+  return data
+}
+
 // Mutations
 
 export async function createDiary({ isTitle, formData, user_id }) {

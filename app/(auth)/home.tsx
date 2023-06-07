@@ -1,22 +1,32 @@
 import {
-  View,
-  Text,
-  TouchableOpacity,
   SafeAreaView,
   ScrollView,
+  Text,
+  TouchableOpacity,
+  View,
 } from 'react-native'
-import supabase from '../../lib/supabase'
-import { useAuthStore } from '../../components/stores/auth'
-import AddName from '../../components/home/add-name'
-import Welcome from '../../components/home/welcome'
+import useSWR from 'swr'
+
+import AddName from '@/components/home/add-name'
+import Welcome from '@/components/home/welcome'
+import { useAuthStore } from '@/components/stores/auth'
+import { getDiaries } from '@/lib/db/stories'
+import supabase from '@/lib/supabase'
 
 export default function HomeScreen() {
   const { user } = useAuthStore()
+
+  const { data: diaries, mutate } = useSWR(
+    user?.id ? ['getStories', user.id] : null,
+    getDiaries
+  )
 
   const handleLogout = async () => {
     const { error } = await supabase.auth.signOut()
     if (error) console.log('Error logging out:', error.message)
   }
+
+  console.log(diaries, 'diaries')
 
   return (
     <SafeAreaView className='flex-1'>
