@@ -4,14 +4,14 @@ import supabase from '../supabase'
 
 // Queries
 
-export async function getToday(_key, user_id) {
+export async function getToday([_key, user_id]) {
   const currentDate = new Date()
   const today = format(currentDate, 'yyyy-MM-dd')
 
   let { data } = await supabase
     .from('diaries')
     .select('*')
-    .eq('user_id_date', `${user_id}-${today}`)
+    .eq('user_id_date', `${user_id}--${today}`)
     .single()
 
   return data
@@ -19,7 +19,7 @@ export async function getToday(_key, user_id) {
 
 // Mutations
 
-export async function createDiary({ isTitle, userData, user_id }) {
+export async function createDiary({ isTitle, formData, user_id }) {
   const currentDate = new Date()
   const today = format(currentDate, 'yyyy-MM-dd')
 
@@ -34,14 +34,34 @@ export async function createDiary({ isTitle, userData, user_id }) {
       .from('diaries')
       .insert([
         isTitle
-          ? { ...commonData, title: userData }
-          : { ...commonData, diary: userData },
+          ? { ...commonData, title: formData }
+          : { ...commonData, diary: formData },
       ])
 
-    if (!error) {
-      return { data: true }
+    if (error) {
+      return { error }
     }
+    return { ok: true }
+  } catch (error) {
     return { error }
+  }
+}
+
+export async function updateDiary({ isTitle, formData, story_id }) {
+  try {
+    const { error } = await supabase
+      .from('diaries')
+      .update([
+        isTitle
+          ? { updated_at: new Date(), title: formData }
+          : { updated_at: new Date(), diary: formData },
+      ])
+      .eq('id', story_id)
+
+    if (error) {
+      return { error }
+    }
+    return { ok: true }
   } catch (error) {
     return { error }
   }

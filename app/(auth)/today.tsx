@@ -11,12 +11,11 @@ import {
   View,
 } from 'react-native'
 import { TapGestureHandler } from 'react-native-gesture-handler'
-import Toast from 'react-native-toast-message'
 import useSWR from 'swr'
 
 import { useAuthStore } from '../../components/stores/auth'
-import { createDiary, getToday } from '../../lib/db/stories'
-import { currentMonthAndDay } from '../../lib/utils'
+import { createDiary, getToday, updateDiary } from '../../lib/db/stories'
+import { currentMonthAndDay, successToast } from '../../lib/utils'
 
 export default function TodayScreen() {
   const { user } = useAuthStore()
@@ -29,35 +28,38 @@ export default function TodayScreen() {
 
   const { control } = useForm()
   const debouncedSaveTitle = debounce(async (title) => {
-    // Perform your desired action here, such as making an API call or updating the UI
-
-    console.log(todayData, 'ok')
+    // if there is no diary, we create it
     if (!todayData) {
       const res = await createDiary({
         isTitle: true,
-        userData: title,
+        formData: title,
         user_id: user.id,
       })
 
-      if (res.data) {
-        Toast.show({
-          type: 'success',
-          text1: 'Yujuu!',
-          text2: 'Guardado correctamente 🥳',
-          position: 'bottom',
-          visibilityTime: 2500,
-          bottomOffset: 80,
-        })
+      if (res.ok) {
+        successToast()
         mutate()
       }
 
       if (res.error) {
-        console.log(res.error, 'error')
+        console.error(res.error, 'error')
       }
+    }
+
+    // There is a diary, so we update it
+    const res = await updateDiary({
+      isTitle: true,
+      formData: title,
+      story_id: todayData.id,
+    })
+
+    if (res.ok) {
+      successToast({ isUpdate: true })
+      mutate()
     }
   }, 1500)
 
-  console.log(todayData, 'todays')
+  console.log(todayData, 'today')
 
   return (
     <SafeAreaView className='flex-1'>
@@ -84,6 +86,7 @@ export default function TodayScreen() {
                       debouncedSaveTitle(text)
                     }}
                     value={value}
+                    defaultValue={todayData?.title || ''}
                     placeholder='Titulo...(Opcional)'
                     className='h-9 flex-1 text-center text-xl text-primary'
                     inputMode='text'
