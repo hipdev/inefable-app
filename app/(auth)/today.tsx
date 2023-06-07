@@ -1,6 +1,8 @@
+import { set } from 'date-fns'
 import { useRouter } from 'expo-router'
 import { debounce } from 'lodash'
 import { Pencil } from 'lucide-react-native'
+import { useEffect } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 import {
   KeyboardAvoidingView,
@@ -28,7 +30,12 @@ export default function TodayScreen() {
     getToday
   )
 
-  const { control } = useForm()
+  const { control, setValue } = useForm()
+
+  useEffect(() => {
+    setValue('title', todayData?.title)
+  }, [todayData?.title])
+
   const debouncedSaveTitle = debounce(async (title) => {
     // if there is no diary, we create it
     if (!todayData) {
@@ -60,8 +67,6 @@ export default function TodayScreen() {
       mutate()
     }
   }, 1500)
-
-  console.log(todayData, 'today')
 
   return (
     <SafeAreaView className='flex-1 relative'>
@@ -104,6 +109,8 @@ export default function TodayScreen() {
                     inputMode='text'
                     placeholderTextColor={'#444'}
                     autoCapitalize='sentences'
+                    autoCorrect={false}
+                    maxLength={40}
                   />
                 )}
               />
