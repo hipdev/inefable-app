@@ -2,7 +2,7 @@ import { set } from 'date-fns'
 import { useRouter } from 'expo-router'
 import { debounce } from 'lodash'
 import { Pencil } from 'lucide-react-native'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 import {
   KeyboardAvoidingView,
@@ -24,6 +24,7 @@ import { currentMonthAndDay, successToast } from '@/lib/utils'
 export default function TodayScreen() {
   const { user } = useAuthStore()
   const router = useRouter()
+  const [currentDate] = useState(new Date())
 
   const { data: todayData, mutate } = useSWR(
     user?.id ? ['getToday', user.id] : null,
@@ -83,7 +84,10 @@ export default function TodayScreen() {
       <KeyboardAvoidingView behavior='padding' className='flex-1'>
         <ScrollView className='mx-4 mt-3 flex-1' keyboardDismissMode='on-drag'>
           <Text className='mt-4 text-center text-3xl font-medium capitalize text-black/80'>
-            {currentMonthAndDay}
+            {currentDate.toLocaleDateString('es-CO', {
+              month: 'long',
+              day: 'numeric',
+            })}
           </Text>
 
           <TouchableWithoutFeedback>

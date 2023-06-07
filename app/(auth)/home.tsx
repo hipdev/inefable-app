@@ -8,6 +8,7 @@ import {
 import useSWR from 'swr'
 
 import AddName from '@/components/home/add-name'
+import Diaries from '@/components/home/diaries'
 import Welcome from '@/components/home/welcome'
 import { useAuthStore } from '@/components/stores/auth'
 import { getDiaries } from '@/lib/db/stories'
@@ -31,7 +32,13 @@ export default function HomeScreen() {
   return (
     <SafeAreaView className='flex-1'>
       <ScrollView className='mx-4 mt-10'>
-        {!user?.user_metadata?.name ? <AddName /> : <Welcome />}
+        {!user?.user_metadata?.name ? (
+          <AddName />
+        ) : diaries?.length == 0 ? (
+          <Welcome />
+        ) : (
+          <Diaries diaries={diaries} />
+        )}
 
         {/* <Text className='mt-4 text-lg font-medium text-black/80'>
           ¿Sabías que?
