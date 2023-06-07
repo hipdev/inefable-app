@@ -1,5 +1,6 @@
-import { useRouter } from 'expo-router'
+import { Link, useRouter } from 'expo-router'
 import { debounce } from 'lodash'
+import { Edit, Pencil } from 'lucide-react-native'
 import { Controller, useForm } from 'react-hook-form'
 import {
   KeyboardAvoidingView,
@@ -7,6 +8,7 @@ import {
   ScrollView,
   Text,
   TextInput,
+  TouchableOpacity,
   TouchableWithoutFeedback,
   View,
 } from 'react-native'
@@ -62,7 +64,17 @@ export default function TodayScreen() {
   console.log(todayData, 'today')
 
   return (
-    <SafeAreaView className='flex-1'>
+    <SafeAreaView className='flex-1 relative'>
+      {/* Floating button */}
+      <TouchableOpacity
+        onPress={() => router.push('/edit-today')}
+        className='absolute bottom-20 right-8 bg-black/10 p-3 rounded-full z-10'
+      >
+        <View>
+          <Pencil size={24} color='black' />
+        </View>
+      </TouchableOpacity>
+
       <KeyboardAvoidingView behavior='padding' className='flex-1'>
         <ScrollView className='mx-4 mt-3 flex-1' keyboardDismissMode='on-drag'>
           <Text className='mt-4 text-center text-3xl font-medium capitalize text-black/80'>

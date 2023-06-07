@@ -1,21 +1,29 @@
+import { Stack } from 'expo-router'
+import { Controller, useForm } from 'react-hook-form'
 import {
-  View,
-  Text,
+  Keyboard,
+  KeyboardAvoidingView,
   SafeAreaView,
   ScrollView,
+  Text,
   TextInput,
-  KeyboardAvoidingView,
   TouchableWithoutFeedback,
-  Keyboard,
+  View,
 } from 'react-native'
+import useSWR from 'swr'
+
 import { useAuthStore } from '../../components/stores/auth'
-import { Controller, useForm } from 'react-hook-form'
-import { currentMonthAndDay } from '../../lib/utils'
+import { getToday } from '../../lib/db/stories'
 import supabase from '../../lib/supabase'
-import { Stack } from 'expo-router'
+import { currentMonthAndDay } from '../../lib/utils'
 
 export default function EditPost() {
   const { user } = useAuthStore()
+  const { data: todayData, mutate } = useSWR(
+    user?.id ? ['getToday', user.id] : null,
+    getToday
+  )
+
   const {
     handleSubmit,
     control,
