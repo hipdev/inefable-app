@@ -1,0 +1,19 @@
+{
+  "presets": ["babel-preset-expo"],
+  "plugins": [
+    [
+      "module-resolver",
+      {
+        "root": ["./"],
+        "alias": {
+          "@": "./"
+        }
+      }
+    ],
+    "module:react-native-dotenv",
+    "nativewind/babel",
+    "@babel/plugin-proposal-export-namespace-from",
+    "react-native-reanimated/plugin",
+    "expo-router/babel"
+  ]
+}

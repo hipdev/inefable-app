@@ -1,6 +1,6 @@
-import { Link, useRouter } from 'expo-router'
+import { useRouter } from 'expo-router'
 import { debounce } from 'lodash'
-import { Edit, Pencil } from 'lucide-react-native'
+import { Pencil } from 'lucide-react-native'
 import { Controller, useForm } from 'react-hook-form'
 import {
   KeyboardAvoidingView,
@@ -15,9 +15,9 @@ import {
 import { TapGestureHandler } from 'react-native-gesture-handler'
 import useSWR from 'swr'
 
-import { useAuthStore } from '../../components/stores/auth'
-import { createDiary, getToday, updateDiary } from '../../lib/db/stories'
-import { currentMonthAndDay, successToast } from '../../lib/utils'
+import { useAuthStore } from '@/components/stores/auth'
+import { createDiary, getToday, updateDiary } from '@/lib/db/stories'
+import { currentMonthAndDay, successToast } from '@/lib/utils'
 
 export default function TodayScreen() {
   const { user } = useAuthStore()

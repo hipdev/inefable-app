@@ -12,10 +12,10 @@ import {
 } from 'react-native'
 import useSWR from 'swr'
 
-import { useAuthStore } from '../../components/stores/auth'
-import { getToday } from '../../lib/db/stories'
-import supabase from '../../lib/supabase'
-import { currentMonthAndDay } from '../../lib/utils'
+import { useAuthStore } from '@/components/stores/auth'
+import { getToday } from '@/lib/db/stories'
+import supabase from '@/lib/supabase'
+import { currentMonthAndDay } from '@/lib/utils'
 
 export default function EditPost() {
   const { user } = useAuthStore()
