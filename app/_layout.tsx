@@ -1,11 +1,10 @@
 import { Stack } from 'expo-router'
 import { StatusBar } from 'expo-status-bar'
-import React from 'react'
 import { AppState } from 'react-native'
 import Toast from 'react-native-toast-message'
 import { SWRConfig } from 'swr'
 
-import { AuthContextProvider } from '../components/common/AuthContext'
+import { AuthContextProvider } from '../components/common/auth-context'
 import { toastConfig } from '../lib/toastConfig'
 
 export default function Layout() {
