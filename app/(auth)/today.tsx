@@ -15,7 +15,7 @@ import {
   View,
 } from 'react-native'
 import { TapGestureHandler } from 'react-native-gesture-handler'
-import useSWR from 'swr'
+import useSWR, { useSWRConfig } from 'swr'
 
 import { useAuthStore } from '@/components/stores/auth'
 import { createDiary, getToday, updateDiary } from '@/lib/db/stories'
@@ -26,10 +26,12 @@ export default function TodayScreen() {
   const router = useRouter()
   const [currentDate] = useState(new Date())
 
-  const { data: todayData, mutate } = useSWR(
+  const { data: todayData, mutate: mutateToday } = useSWR(
     user?.id ? ['getToday', user.id] : null,
     getToday
   )
+
+  const { mutate } = useSWRConfig()
 
   const { control, setValue } = useForm()
 
@@ -48,12 +50,15 @@ export default function TodayScreen() {
 
       if (res.ok) {
         successToast()
-        mutate()
+        mutateToday()
+        mutate(['getStories', user.id])
       }
 
       if (res.error) {
         console.error(res.error, 'error')
       }
+
+      return
     }
 
     // There is a diary, so we update it
@@ -65,7 +70,8 @@ export default function TodayScreen() {
 
     if (res.ok) {
       successToast({ isUpdate: true })
-      mutate()
+      mutateToday()
+      mutate(['getStories', user.id])
     }
   }, 1500)
 

@@ -17,7 +17,7 @@ import useSWR from 'swr'
 
 import { useAuthStore } from '@/components/stores/auth'
 import { createDiary, getToday, updateDiary } from '@/lib/db/stories'
-import { currentMonthAndDay, successToast } from '@/lib/utils'
+import { successToast } from '@/lib/utils'
 
 export default function EditDiary() {
   const [currentDate] = useState(new Date())

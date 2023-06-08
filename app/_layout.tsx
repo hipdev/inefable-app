@@ -12,14 +12,8 @@ export default function Layout() {
   return (
     <SWRConfig
       value={{
-        isOnline() {
-          /* Customize the network state detector */
-          return true
-        },
-        fetcher: (url) =>
-          fetch(url, { method: 'GET' }).then((res) => res.json()),
-        isVisible() {
-          /* Customize the visibility state detector */
+        provider: () => new Map(),
+        isVisible: () => {
           return true
         },
         initFocus(callback) {
@@ -45,9 +39,6 @@ export default function Layout() {
           return () => {
             subscription.remove()
           }
-        },
-        initReconnect(callback) {
-          /* Register the listener with your state provider */
         },
       }}
     >
